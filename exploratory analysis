@@ -1,0 +1,79 @@
+# now lets find the sum of missing values for each variable
+
+amazon_tidy1.isna().sum()
+
+
+
+#we can split up the dataset into subsets by Country
+
+amazon_peru = amazon_tidy['Country']== 'Peru'
+amazon_peru1= amazon_tidy[amazon_peru]
+amazon_col = amazon_tidy['Country']== 'Colombia'
+amazon_col1= amazon_tidy[amazon_col]
+amazon_brazil= amazon_tidy['Country']== 'Brazil'
+amazon_brazil1= amazon_tidy[amazon_brazil]
+
+#we need to use this for a dataset over 5,000
+
+alt.data_transformers.enable('default', max_rows=None)
+
+#first lets take a look at Malaria with a small 0.063732 of missing NA values
+
+#lets facet by year and compare the country to the disease
+fig1= alt.Chart(amazon_peru1).mark_circle(opacity = 0.5).encode(
+    x = 'Country',
+    y = 'Malaria',
+    color = 'Year'
+).properties(width=200, height=100
+).facet(
+    column = 'Year'
+)
+
+fig2= alt.Chart(amazon_brazil1).mark_circle(opacity = 0.5).encode(
+    x = 'Country',
+    y = 'Malaria',
+    color = 'Year'
+).properties(width=200, height=100
+).facet(
+    column = 'Year'
+)
+
+fig3= alt.Chart(amazon_col1).mark_circle(opacity = 0.5).encode(
+    x = 'Country',
+    y = 'Malaria',
+    color = 'Year'
+).properties(width=200, height=100
+).facet(
+    column = 'Year'
+)
+
+malaria = fig1 & fig2 & fig3
+malaria
+
+#Now lets take a look at the optimal temperature of each Country
+#does the temperature affect the disease rate
+
+fig1= alt.Chart(amazon_tidy).mark_point(opacity = 0.5).encode(
+    x = 'OptTemp_Obs',
+    y = 'LST_Day',
+    color = 'Country'
+).properties(width=400, height=400
+)
+
+fig2= alt.Chart(amazon_tidy).mark_point(opacity = 0.5).encode(
+    x = 'OptTemp_Obs',
+    y = 'LST_Night',
+    color = 'Country'
+).properties(width=400, height=400
+)
+
+fig1 & fig2
+
+
+#Now lets facet and compare another disease rate to Country
+
+
+
+
+
+
